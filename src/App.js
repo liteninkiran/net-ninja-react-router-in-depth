@@ -11,7 +11,8 @@ import About from './pages/About';
 import Faq from './pages/help/Faq';
 import Contact from './pages/help/Contact';
 import Careers from './pages/careers/Careers';
-import CareerDetails from "./pages/careers/CareerDetails"
+import CareerDetails from './pages/careers/CareerDetails'
+import CareersError from './pages/careers/CareersError';
 import NotFound from './pages/NotFound';
 
 // Layouts
@@ -21,31 +22,44 @@ import CareersLayout from './layouts/CareersLayout';
 
 // Loaders
 import { careersLoader } from './pages/careers/Careers';
-import { careerDetailsLoader } from "./pages/careers/CareerDetails"
+import { careerDetailsLoader } from './pages/careers/CareerDetails';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
+      {/* Home */}
       <Route index element={<Home />} />
+
+      {/* About */}
       <Route path='about' element={<About />} />
+
+      {/* Help */}
       <Route path='help' element={<HelpLayout />}>
         <Route path='faq' element={<Faq />} />
         <Route path='contact' element={<Contact />} />
       </Route>
-      <Route path='careers' element={<CareersLayout />}>
+
+      {/* Careers */}
+      <Route
+        path='careers'
+        element={<CareersLayout />}
+        errorElement={<CareersError />}
+      >
         <Route
           index
           element={<Careers />}
           loader={careersLoader}
         />
-        <Route 
-          path=":id" 
+        <Route
+          path=':id'
           element={<CareerDetails />}
           loader={careerDetailsLoader}
         />
       </Route>
 
+      {/* Not Found */}
       <Route path='*' element={<NotFound />} />
+
     </Route>
   )
 );
